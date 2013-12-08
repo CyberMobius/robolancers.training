@@ -1,13 +1,9 @@
 
 package edu.wpi.first.wpilibj.templates;
 
-import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.Talon;
-import edu.wpi.first.wpilibj.Victor;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
-import edu.wpi.first.wpilibj.templates.commands.Forward_Drive;
-import edu.wpi.first.wpilibj.templates.commands.Reverse_Drive;
+import edu.wpi.first.wpilibj.templates.commands.DriveWheelToggle;
 import edu.wpi.first.wpilibj.templates.commands.SSPneumaticToggle;
 import edu.wpi.first.wpilibj.templates.subsystems.DriveTrain;
 /**
@@ -15,10 +11,6 @@ import edu.wpi.first.wpilibj.templates.subsystems.DriveTrain;
  * interface to the commands and command groups that allow control of the robot.
  */
 public class OI {
-    public Victor[] victors = new Victor[10]; //TODO: TEST OBJECT SUB
-    public Talon[] talons = new Talon[10];
-    public DoubleSolenoid[] doubleSolenoids = new DoubleSolenoid[10];
-    
     
     public static Joystick driveStick = new Joystick(1);
     JoystickButton driveBtn1 = new JoystickButton(driveStick, 1),
@@ -47,10 +39,9 @@ public class OI {
         wheelBtn11 = new JoystickButton(wheel, 11);
     
     public OI(){
-        driveBtn2.whenReleased(new SSPneumaticToggle(DriveTrain.sonicShifter1));
+        driveBtn2.whenReleased(new SSPneumaticToggle(DriveTrain.sonicShifterPair));
         
-        wheelBtn1.whenPressed(new Forward_Drive());
-        wheelBtn2.whenPressed(new Reverse_Drive());
+        wheelBtn1.whenPressed(new DriveWheelToggle());
         
     }
 }

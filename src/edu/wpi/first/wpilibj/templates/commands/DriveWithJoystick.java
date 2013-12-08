@@ -20,33 +20,33 @@ public class DriveWithJoystick extends CommandBase{
     
     public void execute(){
         if(RobotMap.DUAL_JOYSTICK){
-            if((Math.abs(OI.driveStick.getRawAxis(2)) > .1) || (Math.abs(OI.driveStick.getRawAxis(3)) > .1)){
-                rotateValue = OI.driveStick.getRawAxis(3);
+            if((Math.abs(OI.driveStick.getRawAxis(1)) > .1) || (Math.abs(OI.driveStick.getRawAxis(2)) > .1)){
+                rotateValue = OI.driveStick.getRawAxis(1);
                 moveValue = OI.driveStick.getRawAxis(2);
             }else{
                 moveValue = 0;
                 rotateValue = 0;
             }
+            
         }
         
         if(RobotMap.WHEEL){
             if(RobotMap.FORWARD){
-                if((Math.abs(OI.driveStick.getRawAxis(2)) > .1)){
+                if((Math.abs(OI.driveStick.getRawAxis(2)) > .1)){ //TODO: get Axis Values
                     rotateValue = OI.driveStick.getRawAxis(3);
                 }
-               moveValue = 0.2 + speedFactor;
-               driveTrain.moveWithJoystick(moveValue, rotateValue);
+               moveValue = 0.2 + speedFactor; //TODO: acceleration button
             }
             else if(RobotMap.REVERSE){ 
                 if((Math.abs(OI.driveStick.getRawAxis(2)) > .1)){
                     rotateValue = OI.driveStick.getRawAxis(3);
                 }
                 moveValue = -(0.4 + speedFactor);    
-                driveTrain.moveWithJoystick(moveValue, rotateValue);
             }else{
                 moveValue = 0;
                 rotateValue = 0;
             } 
+            driveTrain.moveWithJoystick(moveValue, rotateValue);
         }
     }
     
