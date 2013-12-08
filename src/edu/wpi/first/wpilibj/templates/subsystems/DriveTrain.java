@@ -5,11 +5,12 @@
 package edu.wpi.first.wpilibj.templates.subsystems;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.RobotDrive;
+import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.Victor;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.templates.RobotMap;
-import edu.wpi.first.wpilibj.templates.commands.CommandBase;
 import edu.wpi.first.wpilibj.templates.commands.DriveWithJoystick;
 
 /**
@@ -18,27 +19,26 @@ import edu.wpi.first.wpilibj.templates.commands.DriveWithJoystick;
 
 public class DriveTrain extends Subsystem{
     private RobotDrive drive;
-    private double x, y, speed;
+    private double x, y, leftDrive, rightDrive, speed;
     
-    public static Victor leftMotor1, rightMotor1, leftMotor2, rightMotor2;
-    public static DoubleSolenoid sonicShifter1;
+    public static SpeedController leftFrontMotor, rightFrontMotor, leftRearMotor, rightRearMotor;
+    public static DoubleSolenoid sonicShifterPair;
     
     public DriveTrain(){
         super("Drive Train");
         
-       leftMotor1 = new Victor(RobotMap.LEFT_MOTOR_ONE);
-       CommandBase.oi.victors[0] = leftMotor1;
-       rightMotor1 = new Victor(RobotMap.RIGHT_MOTOR_ONE);
-       CommandBase.oi.victors[1] = rightMotor1;
-       leftMotor2 = new Victor(RobotMap.LEFT_MOTOR_TWO);
-       CommandBase.oi.victors[2] = leftMotor2;
-       rightMotor2 = new Victor(RobotMap.RIGHT_MOTOR_TWO);
-       CommandBase.oi.victors[3] = rightMotor2;
+       leftFrontMotor = new Victor(RobotMap.LEFT_MOTOR_FRONT);
+       leftRearMotor = new Victor(RobotMap.LEFT_MOTOR_REAR);
+       rightFrontMotor = new Victor(RobotMap.RIGHT_MOTOR_FRONT);
+       rightRearMotor = new Victor(RobotMap.RIGHT_MOTOR_REAR);
         
-       sonicShifter1 = new DoubleSolenoid(1,2);
-       CommandBase.oi.doubleSolenoids[0] = sonicShifter1;
+       sonicShifterPair = new DoubleSolenoid(1,2);
        
-       speed = 0.5;
+       speed = 0.75;
+       drive = new RobotDrive(leftFrontMotor, leftRearMotor, rightFrontMotor, rightRearMotor);
+       drive.setSafetyEnabled(false); //have this so compiler wont show "Robot Drive not outputting enough data"
+       
+       sonicShifterPair.set(Value.kForward);
     }
     
     public void initDefaultCommand(){
@@ -46,8 +46,20 @@ public class DriveTrain extends Subsystem{
     }
     
     public void moveWithJoystick(double moveValue, double rotateValue){
-        x = moveValue*speed;
-        y = rotateValue*speed;
-        drive.arcadeDrive(y,x);
+        if (RobotMap.MONO_JOYSTICK){
+            y = moveValue*speed;
+            x = rotateValue*speed;
+            drive.arcadeDrive(y,x);
+        }
+        else if(RobotMap.DUAL_JOYSTICK){
+            leftDrive = moveValue*speed;
+            rightDrive = rotateValue*speed;
+            drive.tankDrive(leftDrive,rightDrive);
+        }
+        else if(RobotMap.WHEEL){
+            leftDrive = moveValue*speed;
+            rightDrive = rotateValue*speed;
+            drive.tankDrive(leftDrive,rightDrive);
+        }
     }
 }
