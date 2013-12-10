@@ -14,9 +14,15 @@ public class RobotMap {
     public static final boolean DEBUG_MODE = false;
     
     //Joystick Type
-    public static final boolean MONO_JOYSTICK = true; //Arcade Drive
-    public static final boolean DUAL_JOYSTICK = false; //Tank Drive
-    public static final boolean WHEEL = false; //Pizza Drive
+    public static final boolean MONO_JOYSTICK = true;
+    public static final boolean DUAL_JOYSTICK = false;
+    public static final boolean WHEEL = false;
+    public static final boolean GAME_PAD = false;
+    
+    //Drive Type
+    public static final boolean ARCADE_DRIVE = false;
+    public static final boolean TANK_DRIVE = false;
+    public static final boolean RC_DRIVE = true;
     
     //Motor Values
     public static final int LEFT_MOTOR_FRONT = 1;

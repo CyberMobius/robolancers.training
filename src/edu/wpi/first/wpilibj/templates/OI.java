@@ -12,37 +12,44 @@ import edu.wpi.first.wpilibj.templates.subsystems.DriveTrain;
  */
 public class OI {
     
-    public static Joystick driveStick = new Joystick(1);
-    JoystickButton driveBtn1 = new JoystickButton(driveStick, 1),
-        driveBtn2 = new JoystickButton(driveStick, 2),
-        driveBtn3 = new JoystickButton(driveStick, 3),
-        driveBtn4 = new JoystickButton(driveStick, 4),
-        driveBtn5 = new JoystickButton(driveStick, 5),
-        driveBtn6 = new JoystickButton(driveStick, 6),
-        driveBtn7 = new JoystickButton(driveStick, 7),
-        driveBtn8 = new JoystickButton(driveStick, 8),
-        driveBtn9 = new JoystickButton(driveStick, 9),
-        driveBtn10 = new JoystickButton(driveStick, 10),
-        driveBtn11 = new JoystickButton(driveStick, 11);
+    public static Joystick joystick1 = new Joystick(1);
+    JoystickButton joystick1Btn1 = new JoystickButton(joystick1, 1),
+        joystick1Btn2 = new JoystickButton(joystick1, 2),
+        joystick1Btn3 = new JoystickButton(joystick1, 3),
+        joystick1Btn4 = new JoystickButton(joystick1, 4),
+        joystick1Btn5 = new JoystickButton(joystick1, 5),
+        joystick1Btn6 = new JoystickButton(joystick1, 6),
+        joystick1Btn7 = new JoystickButton(joystick1, 7),
+        joystick1Btn8 = new JoystickButton(joystick1, 8),
+        joystick1Btn9 = new JoystickButton(joystick1, 9),
+        joystick1Btn10 = new JoystickButton(joystick1, 10),
+        joystick1Btn11 = new JoystickButton(joystick1, 11);
     
-    public static Joystick wheel = new Joystick(1);
-    JoystickButton wheelBtn1 = new JoystickButton(wheel, 1),
-        wheelBtn2 = new JoystickButton(wheel, 2),
-        wheelBtn3 = new JoystickButton(wheel, 3),
-        wheelBtn4 = new JoystickButton(wheel, 4),
-        wheelBtn5 = new JoystickButton(wheel, 5),
-        wheelBtn6 = new JoystickButton(wheel, 6),
-        wheelBtn7 = new JoystickButton(wheel, 7),
-        wheelBtn8 = new JoystickButton(wheel, 8),
-        wheelBtn9 = new JoystickButton(wheel, 9),
-        wheelBtn10 = new JoystickButton(wheel, 10),
-        wheelBtn11 = new JoystickButton(wheel, 11);
+    public static Joystick joystick2 = new Joystick(2);
+    JoystickButton joystick2Btn1 = new JoystickButton(joystick2, 1),
+        joystick2Btn2 = new JoystickButton(joystick2, 2),
+        joystick2Btn3 = new JoystickButton(joystick2, 3),
+        joystick2Btn4 = new JoystickButton(joystick2, 4),
+        joystick2Btn5 = new JoystickButton(joystick2, 5),
+        joystick2Btn6 = new JoystickButton(joystick2, 6),
+        joystick2Btn7 = new JoystickButton(joystick2, 7),
+        joystick2Btn8 = new JoystickButton(joystick2, 8),
+        joystick2Btn9 = new JoystickButton(joystick2, 9),
+        joystick2Btn10 = new JoystickButton(joystick2, 10),
+        joystick2Btn11 = new JoystickButton(joystick2, 11);
     
     public OI(){
-        driveBtn2.whenReleased(new SSPneumaticToggle(DriveTrain.sonicShifterPair));
+        if(RobotMap.MONO_JOYSTICK){ //One Joystick Button Layouts
+            joystick1Btn2.whenReleased(new SSPneumaticToggle(DriveTrain.sonicShifterPair));
+        }
+        if(RobotMap.DUAL_JOYSTICK){ //One Joystick Button Layouts
+            joystick1Btn2.whenReleased(new SSPneumaticToggle(DriveTrain.sonicShifterPair));
+            joystick2Btn2.whenReleased(new SSPneumaticToggle(DriveTrain.sonicShifterPair));
+        }
         
-        wheelBtn1.whenPressed(new DriveWheelToggle());
-        
+        if(RobotMap.WHEEL){ //Wheel Control Drive Button Layouts
+            joystick1Btn2.whenPressed(new DriveWheelToggle());
+        }
     }
 }
 

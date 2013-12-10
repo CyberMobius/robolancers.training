@@ -12,41 +12,71 @@ import edu.wpi.first.wpilibj.templates.RobotMap;
  * @author Armond
  */
 public class DriveWithJoystick extends CommandBase{
-    private double moveValue, rotateValue, speedFactor;
+    private double moveValue, rotateValue, leftDrive, rightDrive, speed;
     
     public DriveWithJoystick(){ requires(driveTrain); }
     
     public void initialize(){}
     
     public void execute(){
-        if(RobotMap.DUAL_JOYSTICK){
-            if((Math.abs(OI.driveStick.getRawAxis(1)) > .1) || (Math.abs(OI.driveStick.getRawAxis(2)) > .1)){
-                rotateValue = OI.driveStick.getRawAxis(1);
-                moveValue = OI.driveStick.getRawAxis(2);
+        setSpeedFactor(1.0); //set the speed to a certain value Currently: 100%
+        
+        if(RobotMap.MONO_JOYSTICK && RobotMap.ARCADE_DRIVE){
+            if((Math.abs(OI.joystick1.getRawAxis(1)) > .1) || (Math.abs(OI.joystick1.getRawAxis(2)) > .1)){
+                rotateValue = OI.joystick1.getRawAxis(1);
+                moveValue = OI.joystick1.getRawAxis(2);
             }else{
                 moveValue = 0;
                 rotateValue = 0;
             }
-            
+            driveTrain.moveWithJoystick(moveValue, rotateValue, speed);
         }
         
-        if(RobotMap.WHEEL){
+        if(RobotMap.DUAL_JOYSTICK && RobotMap.TANK_DRIVE){
+            if((Math.abs(OI.joystick1.getRawAxis(2)) > .1)){
+                leftDrive = OI.joystick1.getRawAxis(2);
+            }else{
+                leftDrive = 0;
+            }
+            if((Math.abs(OI.joystick2.getRawAxis(2)) > .1)){
+                rightDrive = OI.joystick1.getRawAxis(2);
+            }else{
+                rightDrive = 0;
+            }
+            driveTrain.moveWithJoystick(moveValue, rotateValue, speed);
+        }
+        
+        if(RobotMap.DUAL_JOYSTICK && RobotMap.RC_DRIVE){
+            if((Math.abs(OI.joystick1.getRawAxis(2)) > .1)){
+                moveValue = OI.joystick1.getRawAxis(2);
+            }else{
+                moveValue = 0;
+            }
+            if((Math.abs(OI.joystick2.getRawAxis(1)) > .1)){
+                rotateValue = OI.joystick1.getRawAxis(1);
+            }else{
+                rotateValue = 0;
+            }
+            driveTrain.moveWithJoystick(moveValue, rotateValue, speed);
+        }
+        
+        if(RobotMap.WHEEL){ //TODO: Speed variable buttons
             if(RobotMap.FORWARD){
-                if((Math.abs(OI.driveStick.getRawAxis(2)) > .1)){ //TODO: get Axis Values
-                    rotateValue = OI.driveStick.getRawAxis(3);
+                if((Math.abs(OI.joystick1.getRawAxis(2)) > .1)){ //TODO: get Axis Values
+                    rotateValue = OI.joystick1.getRawAxis(3);
                 }
-               moveValue = 0.2 + speedFactor; //TODO: acceleration button
+               moveValue = 0.2 + speed; //TODO: acceleration button
             }
             else if(RobotMap.REVERSE){ 
-                if((Math.abs(OI.driveStick.getRawAxis(2)) > .1)){
-                    rotateValue = OI.driveStick.getRawAxis(3);
+                if((Math.abs(OI.joystick1.getRawAxis(2)) > .1)){
+                    rotateValue = OI.joystick1.getRawAxis(3);
                 }
-                moveValue = -(0.4 + speedFactor);    
+                moveValue = -(0.4 + speed);    
             }else{
                 moveValue = 0;
                 rotateValue = 0;
             } 
-            driveTrain.moveWithJoystick(moveValue, rotateValue);
+            driveTrain.moveWithJoystick(moveValue, rotateValue, speed);
         }
     }
     
@@ -54,7 +84,6 @@ public class DriveWithJoystick extends CommandBase{
     protected void end(){}
     protected void interrupted(){}
     
-    public void setSpeedFactor(){
+    public void setSpeedFactor(double s){ this.speed = s; }
     
-    }
 }
