@@ -19,7 +19,7 @@ import edu.wpi.first.wpilibj.templates.commands.DriveWithJoystick;
 
 public class DriveTrain extends Subsystem{
     private RobotDrive drive;
-    private double x, y, leftDrive, rightDrive, speed;
+    private double x, y, leftDrive, rightDrive;
     
     public static SpeedController leftFrontMotor, rightFrontMotor, leftRearMotor, rightRearMotor;
     public static DoubleSolenoid sonicShifterPair;
@@ -34,7 +34,6 @@ public class DriveTrain extends Subsystem{
         
        sonicShifterPair = new DoubleSolenoid(1,2);
        
-       speed = 0.75;
        drive = new RobotDrive(leftFrontMotor, leftRearMotor, rightFrontMotor, rightRearMotor);
        drive.setSafetyEnabled(false); //have this so compiler wont show "Robot Drive not outputting enough data"
        
@@ -45,16 +44,21 @@ public class DriveTrain extends Subsystem{
         setDefaultCommand(new DriveWithJoystick());
     }
     
-    public void moveWithJoystick(double moveValue, double rotateValue){
-        if (RobotMap.MONO_JOYSTICK){
+    public void moveWithJoystick(double moveValue, double rotateValue, double speed){
+        if (RobotMap.MONO_JOYSTICK && RobotMap.ARCADE_DRIVE){
             y = moveValue*speed;
             x = rotateValue*speed;
             drive.arcadeDrive(y,x);
         }
-        else if(RobotMap.DUAL_JOYSTICK){
+        else if(RobotMap.DUAL_JOYSTICK && RobotMap.TANK_DRIVE){
             leftDrive = moveValue*speed;
             rightDrive = rotateValue*speed;
             drive.tankDrive(leftDrive,rightDrive);
+        }
+        else if(RobotMap.DUAL_JOYSTICK && RobotMap.RC_DRIVE){
+            y = moveValue*speed;
+            x = rotateValue*speed;
+            drive.arcadeDrive(y,x);
         }
         else if(RobotMap.WHEEL){
             leftDrive = moveValue*speed;
