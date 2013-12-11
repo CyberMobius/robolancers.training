@@ -39,7 +39,7 @@ public class DriveWithJoystick extends CommandBase{
                 leftDrive = 0;
             }
             if((Math.abs(OI.joystick2.getRawAxis(2)) > .1)){
-                rightDrive = OI.joystick1.getRawAxis(2);
+                rightDrive = OI.joystick2.getRawAxis(2);
             }else{
                 rightDrive = 0;
             }
@@ -53,7 +53,45 @@ public class DriveWithJoystick extends CommandBase{
                 moveValue = 0;
             }
             if((Math.abs(OI.joystick2.getRawAxis(1)) > .1)){
+                rotateValue = OI.joystick2.getRawAxis(1);
+            }else{
+                rotateValue = 0;
+            }
+            driveTrain.moveWithJoystick(moveValue, rotateValue, speed);
+        }
+        if(RobotMap.GAME_PAD && RobotMap.ARCADE_DRIVE){
+            if((Math.abs(OI.joystick1.getRawAxis(1)) > .1) || (Math.abs(OI.joystick1.getRawAxis(2)) > .1)){
                 rotateValue = OI.joystick1.getRawAxis(1);
+                moveValue = OI.joystick1.getRawAxis(2);
+            }else{
+                moveValue = 0;
+                rotateValue = 0;
+            }
+            driveTrain.moveWithJoystick(moveValue, rotateValue, speed);   
+        }
+        
+        if(RobotMap.GAME_PAD && RobotMap.TANK_DRIVE){
+            if((Math.abs(OI.joystick1.getRawAxis(2)) > .1)){
+                leftDrive = OI.joystick1.getRawAxis(2);
+            }else{
+                leftDrive = 0;
+            }
+            if((Math.abs(OI.joystick1.getRawAxis(4)) > .1)){
+                rightDrive = OI.joystick1.getRawAxis(4);
+            }else{
+                rightDrive = 0;
+            }
+            driveTrain.moveWithJoystick(moveValue, rotateValue, speed);
+        }
+        
+        if(RobotMap.GAME_PAD && RobotMap.RC_DRIVE){
+            if((Math.abs(OI.joystick1.getRawAxis(2)) > .1)){
+                moveValue = OI.joystick1.getRawAxis(2);
+            }else{
+                moveValue = 0;
+            }
+            if((Math.abs(OI.joystick1.getRawAxis(3)) > .1)){
+                rotateValue = OI.joystick1.getRawAxis(3);
             }else{
                 rotateValue = 0;
             }
