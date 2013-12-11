@@ -14,8 +14,8 @@ public class RobotMap {
     public static final boolean DEBUG_MODE = false;
     
     //Joystick Type
-    public static final boolean MONO_JOYSTICK = true;
-    public static final boolean DUAL_JOYSTICK = false;
+    public static final boolean MONO_JOYSTICK = false;
+    public static final boolean DUAL_JOYSTICK = true;
     public static final boolean WHEEL = false;
     public static final boolean GAME_PAD = false;
     
