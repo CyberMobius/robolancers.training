@@ -42,12 +42,11 @@ public class OI {
         if(RobotMap.MONO_JOYSTICK){ //One Joystick Button Layouts
             joystick1Btn2.whenReleased(new SSPneumaticToggle(DriveTrain.sonicShifterPair));
         }
-        if(RobotMap.DUAL_JOYSTICK){ //One Joystick Button Layouts
+        else if(RobotMap.DUAL_JOYSTICK){ //One Joystick Button Layouts
             joystick1Btn2.whenReleased(new SSPneumaticToggle(DriveTrain.sonicShifterPair));
             joystick2Btn2.whenReleased(new SSPneumaticToggle(DriveTrain.sonicShifterPair));
         }
-        
-        if(RobotMap.WHEEL){ //Wheel Control Drive Button Layouts
+        else if(RobotMap.WHEEL){ //Wheel Control Drive Button Layouts
             joystick1Btn2.whenPressed(new DriveWheelToggle());
         }
     }
