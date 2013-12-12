@@ -45,22 +45,12 @@ public class DriveTrain extends Subsystem{
     }
     
     public void moveWithJoystick(double moveValue, double rotateValue, double speed){
-        if (RobotMap.MONO_JOYSTICK && RobotMap.ARCADE_DRIVE){
+        if (RobotMap.ARCADE_DRIVE || RobotMap.RC_DRIVE || RobotMap.WHEEL){
             y = moveValue*speed;
             x = rotateValue*speed;
             drive.arcadeDrive(y,x);
         }
-        else if(RobotMap.DUAL_JOYSTICK && RobotMap.TANK_DRIVE){
-            leftDrive = moveValue*speed;
-            rightDrive = rotateValue*speed;
-            drive.tankDrive(leftDrive,rightDrive);
-        }
-        else if(RobotMap.DUAL_JOYSTICK && RobotMap.RC_DRIVE){
-            y = moveValue*speed;
-            x = rotateValue*speed;
-            drive.arcadeDrive(y,x);
-        }
-        else if(RobotMap.WHEEL){
+        else if(RobotMap.TANK_DRIVE){
             leftDrive = moveValue*speed;
             rightDrive = rotateValue*speed;
             drive.tankDrive(leftDrive,rightDrive);

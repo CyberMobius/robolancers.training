@@ -59,6 +59,7 @@ public class DriveWithJoystick extends CommandBase{
             }
             driveTrain.moveWithJoystick(moveValue, rotateValue, speed);
         }
+        
         if(RobotMap.GAME_PAD && RobotMap.ARCADE_DRIVE){
             if((Math.abs(OI.joystick1.getRawAxis(1)) > .1) || (Math.abs(OI.joystick1.getRawAxis(2)) > .1)){
                 rotateValue = OI.joystick1.getRawAxis(1);
@@ -98,23 +99,22 @@ public class DriveWithJoystick extends CommandBase{
             driveTrain.moveWithJoystick(moveValue, rotateValue, speed);
         }
         
-        if(RobotMap.WHEEL){ //TODO: Speed variable buttons
-            if(RobotMap.FORWARD){
-                if((Math.abs(OI.joystick1.getRawAxis(2)) > .1)){ //TODO: get Axis Values
-                    rotateValue = OI.joystick1.getRawAxis(3);
-                }
-               moveValue = 0.2 + speed; //TODO: acceleration button
+        if(RobotMap.WHEEL){ //TODO: Check axis loctations
+            if(Math.abs(OI.joystick1.getRawAxis(1)) > .1){ //The wheel itself
+                rotateValue = OI.joystick1.getRawAxis(1);
+            }else{
+                rotateValue = 0;
             }
-            else if(RobotMap.REVERSE){ 
-                if((Math.abs(OI.joystick1.getRawAxis(2)) > .1)){
-                    rotateValue = OI.joystick1.getRawAxis(3);
+            if(Math.abs(OI.joystick1.getRawAxis(2)) > .1){ //The Pedal
+                if(RobotMap.FORWARD){
+                    moveValue = OI.joystick1.getRawAxis(2);
                 }
-                moveValue = -(0.4 + speed);    
+                else if(RobotMap.REVERSE){
+                    moveValue = -OI.joystick1.getRawAxis(2);
+                }
             }else{
                 moveValue = 0;
-                rotateValue = 0;
-            } 
-            driveTrain.moveWithJoystick(moveValue, rotateValue, speed);
+            }
         }
     }
     
